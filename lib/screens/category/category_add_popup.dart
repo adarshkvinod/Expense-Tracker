@@ -1,9 +1,12 @@
+import 'package:expense_tracker/db/category/category_db.dart';
 import 'package:expense_tracker/screens/models/category/category_model.dart';
 import 'package:flutter/material.dart';
 
 ValueNotifier<CategoryType>selectedCategoryNotifier = ValueNotifier(CategoryType.income);
 
 Future<void> showCategoryAddPopup(BuildContext context)async{
+final _nameEditingController = TextEditingController();
+
   showDialog(context: context,
    builder: (ctx){
     return  SimpleDialog(
@@ -13,6 +16,7 @@ Future<void> showCategoryAddPopup(BuildContext context)async{
       Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextFormField(
+          controller: _nameEditingController,
           cursorColor: Colors.white,
           decoration: const InputDecoration(
             hintText: 'Category Name',
@@ -21,6 +25,8 @@ Future<void> showCategoryAddPopup(BuildContext context)async{
               borderSide: BorderSide(color: Colors.white,width: 10)
             )
           ),
+
+
         ),
       ),
       const Padding(
@@ -36,7 +42,24 @@ Future<void> showCategoryAddPopup(BuildContext context)async{
         padding: const EdgeInsets.all(8.0),
         child: ElevatedButton(
           style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.pink)),
-          onPressed: (){}, child: const Text('Add',style: TextStyle(color: Colors.white),)),
+          onPressed: (){
+              final _name = _nameEditingController.text;
+              if(_name.isEmpty){
+                return;
+              }
+              final _type=  selectedCategoryNotifier.value;
+              final _category= CategoryModel(
+                id: DateTime.now().millisecondsSinceEpoch.toString(),
+                 name: _name, 
+                 type: _type);
+
+                 CategoryDB.instance.insertCategory(_category);
+                 Navigator.of(ctx).pop();
+          },
+           child: const Text('Add',
+           style: TextStyle(color: Colors.white),
+           )
+           ),
       )
     ],
     );
@@ -49,7 +72,8 @@ class RadioButton extends StatelessWidget {
   final CategoryType type;
  
 
-  const RadioButton({super.key,
+  const RadioButton({
+    super.key,
    required this.title,
    required this.type,
   });

@@ -1,8 +1,8 @@
-import 'package:expense_tracker/db/category/category_db.dart';
+
 import 'package:expense_tracker/screens/category/category_add_popup.dart';
 import 'package:expense_tracker/screens/category/screen_category.dart';
 import 'package:expense_tracker/screens/home/widgets/bottom_navigation.dart';
-import 'package:expense_tracker/screens/models/category/category_model.dart';
+
 import 'package:expense_tracker/screens/transactions/screen_transaction.dart';
 import 'package:flutter/material.dart';
 

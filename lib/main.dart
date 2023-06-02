@@ -1,9 +1,13 @@
+import 'package:expense_tracker/db/category/category_db.dart';
 import 'package:expense_tracker/screens/home/home_screen.dart';
 import 'package:expense_tracker/screens/models/category/category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 
 Future <void> main() async{
+final obj1 = CategoryDB();
+final obj2 = CategoryDB();
+
   WidgetsFlutterBinding.ensureInitialized();
   Hive.initFlutter();
 
